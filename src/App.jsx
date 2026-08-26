@@ -1,0 +1,130 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Toast from "./components/Toast";
+import ImportDialog from "./components/ImportDialog";
+import Applications from "./pages/Applications";
+import Stats from "./pages/Stats";
+import useApplications from "./hooks/useApplications";
+import { exportApplications, importApplications } from "./utils/backup";
+import { willReplace } from "./utils/application";
+import { useI18n } from "./i18n";
+
+export default function App() {
+  const { t } = useI18n();
+  const { applications, storageFailed, upsert, remove, replaceAll, mergeAll } =
+    useApplications();
+  const [toast, setToast] = useState(null);
+  const [pendingImport, setPendingImport] = useState(null);
+
+  const notify = useCallback((message, type = "success") => {
+    setToast({ message, type, at: Date.now() });
+  }, []);
+
+  const storageWarned = useRef(false);
+
+  useEffect(() => {
+    if (!storageFailed) {
+      storageWarned.current = false;
+      return;
+    }
+    if (storageWarned.current) return;
+
+    storageWarned.current = true;
+    notify(t("file.storageFailed"), "error");
+  }, [notify, storageFailed, t]);
+
+  const handleExport = useCallback(() => {
+    if (applications.length === 0) {
+      notify(t("file.nothingToExport"), "error");
+      return;
+    }
+
+    exportApplications(applications);
+    notify(t("file.exported", { count: applications.length }));
+  }, [applications, notify, t]);
+
+  const handleImport = useCallback(
+    async (file) => {
+      const result = await importApplications(file);
+
+      if (result.errorKey) {
+        notify(t(result.errorKey), "error");
+        return;
+      }
+
+      setPendingImport(result);
+    },
+    [notify, t],
+  );
+
+  const applyImport = useCallback(
+    (mode) => {
+      const incoming = pendingImport.applications;
+      setPendingImport(null);
+
+      if (mode === "replace") {
+        replaceAll(incoming);
+        notify(t("file.replaced", { count: incoming.length }));
+        return;
+      }
+
+      const known = new Set(applications.map((item) => item.id));
+      const added = incoming.filter((item) => !known.has(item.id)).length;
+      const updated = incoming.filter((item) =>
+        willReplace(applications, item),
+      ).length;
+
+      mergeAll(incoming);
+      notify(t("file.merged", { added, updated }));
+    },
+    [applications, mergeAll, notify, pendingImport, replaceAll, t],
+  );
+
+  return (
+    <Router>
+      <div className="bg-bg text-text flex min-h-screen flex-col">
+        <Navbar onImport={handleImport} onExport={handleExport} />
+
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Applications
+                  applications={applications}
+                  onSave={upsert}
+                  onDelete={remove}
+                />
+              }
+            />
+            <Route
+              path="/stats"
+              element={<Stats applications={applications} />}
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+
+        <ImportDialog
+          open={Boolean(pendingImport)}
+          incoming={pendingImport?.imported ?? 0}
+          existing={applications.length}
+          skipped={pendingImport?.skipped ?? 0}
+          onCancel={() => setPendingImport(null)}
+          onMerge={() => applyImport("merge")}
+          onReplace={() => applyImport("replace")}
+        />
+
+        <Footer />
+        <Toast toast={toast} onDismiss={() => setToast(null)} />
+      </div>
+    </Router>
+  );
+}

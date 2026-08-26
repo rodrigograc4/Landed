@@ -1,0 +1,157 @@
+export default {
+  meta: { name: "Português", locale: "pt-PT" },
+
+  nav: {
+    stats: "Estatísticas",
+    backup: "Backup",
+    import: "Importar",
+    export: "Exportar",
+    github: "Repositório open source no GitHub",
+  },
+
+  status: {
+    saved: "Guardado",
+    applied: "Aplicado",
+    interviewing: "Em Entrevista",
+    offer: "Proposta Recebida",
+    rejected: "Rejeitado",
+    rejectedAfterInterview: "Rejeitado Após Entrevista",
+    ghosted: "Sem Resposta",
+  },
+
+  workMode: {
+    remote: "Remoto",
+    hybrid: "Híbrido",
+    onsite: "Presencial",
+  },
+
+  applications: {
+    title: "Candidaturas",
+    countOne: "{count} candidatura registada",
+    countMany: "{count} candidaturas registadas",
+    visible: "{count} visíveis",
+    create: "Nova Candidatura",
+    search: "Procurar por empresa, cargo, localidade, origem ou notas...",
+    allStatuses: "Todos os estados",
+    allWorkModes: "Todos os regimes",
+    filters: "Filtros",
+    unsuccessful: "Sem Sucesso",
+    sort_date: "Data",
+    sort_company: "Alfabética",
+    sort_result: "Resultado",
+    view_rows: "Ver em lista",
+    view_cards: "Ver em cartões",
+    empty: "Ainda não tens candidaturas registadas.",
+    emptyAction: "Adicionar a primeira candidatura",
+  },
+
+  pagination: {
+    label: "Paginação das candidaturas",
+    previous: "Página anterior",
+    next: "Página seguinte",
+    page: "Página {page}",
+    range: "{from}-{to} de {total}",
+  },
+
+  table: {
+    companyRole: "Empresa e Cargo",
+    location: "Localização",
+    date: "Data",
+    status: "Estado",
+    notes: "Notas",
+    actions: "Ações",
+    openPosting: "Abrir anúncio",
+    edit: "Editar candidatura na {company}",
+  },
+
+  form: {
+    createTitle: "Nova candidatura",
+    editTitle: "Editar candidatura",
+    company: "Empresa",
+    companyPlaceholder: "Ex: Feedzai",
+    role: "Cargo / Função",
+    rolePlaceholder: "Ex: Frontend Engineer",
+    location: "Localidade",
+    locationPlaceholder: "Ex: Lisboa, Porto, Remoto",
+    workMode: "Regime",
+    status: "Estado",
+    date: "Data da candidatura",
+    source: "Origem",
+    sourcePlaceholder: "Ex: LinkedIn, referência, site da empresa",
+    link: "Link do anúncio",
+    notes: "Notas / Feedback",
+    notesPlaceholder: "Contactos, banda salarial, feedback de entrevistas...",
+    cancel: "Cancelar",
+    save: "Guardar alterações",
+    add: "Adicionar",
+    delete: "Eliminar candidatura",
+    close: "Fechar",
+    errorCompany: "Indica a empresa.",
+    errorRole: "Indica o cargo.",
+    errorDate: "Indica a data da candidatura.",
+    dateSavedHint: "Ainda não te candidataste, por isso não há data.",
+  },
+
+  confirm: {
+    title: "Eliminar candidatura?",
+    message:
+      'A candidatura a "{role}" na {company} será removida definitivamente.',
+    cancel: "Cancelar",
+    delete: "Eliminar",
+  },
+
+  stats: {
+    title: "Estatísticas",
+    subtitle:
+      "Métricas de conversão calculadas a partir das tuas candidaturas.",
+    total: "Candidaturas",
+    totalHint: "Total de registos guardados",
+    responseRate: "Taxa de resposta",
+    responseHint: "{count} com algum feedback",
+    interviewRate: "Taxa de entrevistas",
+    interviewHint: "{count} chegaram à entrevista",
+    geography: "Distribuição geográfica",
+    geographySubtitle: "Onde te candidataste mais",
+    funnel: "Estado atual",
+    funnelSubtitle: "Em que fase está cada candidatura",
+    noData: "Sem dados suficientes.",
+    unknownLocation: "Não indicada",
+    sources: "Origem das candidaturas",
+    sourcesSubtitle: "Por onde chegaste a cada vaga",
+    unknownSource: "Desconhecida",
+    active: "Ainda em aberto",
+    activeHint: "{count} já fechadas",
+    timeline: "Candidaturas por semana",
+    timelineSubtitle: "Últimas {weeks} semanas",
+  },
+
+  import: {
+    title: "Importar {count} candidaturas",
+    message:
+      "Tens {count} candidaturas guardadas. Podes juntar as do ficheiro às atuais ou substituir tudo.",
+    skipped: "{count} entradas inválidas foram ignoradas.",
+    merge: "Juntar às atuais",
+    replace: "Substituir tudo",
+    cancel: "Cancelar",
+  },
+
+  file: {
+    exported: "{count} candidaturas exportadas.",
+    nothingToExport: "Não há candidaturas para exportar.",
+    replaced: "{count} candidaturas importadas, substituindo as anteriores.",
+    merged: "{added} candidaturas adicionadas · {updated} atualizadas.",
+    storageFailed:
+      "Não foi possível guardar no navegador. As alterações podem perder-se ao fechar a página.",
+    readError: "Não foi possível ler o ficheiro.",
+    emptyFile: "O ficheiro está vazio.",
+    parseError: "Este ficheiro não é um JSON válido.",
+    badFormat:
+      "Backup não reconhecido: não foi encontrada uma lista de candidaturas.",
+    noValidEntries: "Nenhuma candidatura válida encontrada no ficheiro.",
+  },
+
+  footer: {
+    tagline: "Landed - Job Application Tracker",
+    license: "Licença MIT © 2026 Rodrigo Graça",
+  },
+};
