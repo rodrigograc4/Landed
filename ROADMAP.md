@@ -28,30 +28,6 @@ config and Testing Library, neither of which is set up yet.
 
 **Effort:** small. **Value:** insurance on the one irreversible action.
 
-### Easy sync
-
-A link that carries your applications inside it, as a replacement for exporting
-a file and sending it to yourself. The Backup menu gains an Easy sync entry that
-produces a link like `landed.rodrigograc4.com/#d=...`, holding every application
-compressed into the URL. Open that link on another device and the app unpacks
-it, then shows the import dialog it already has, with merge and replace as the
-only two choices, before cleaning the fragment out of the address bar.
-
-The point is that everything after the `#` in a URL never reaches a server. Not
-the host, not Vercel, nobody. So this stays as local as the app is today, and
-the privacy section of the README stays true word for word, which is not the
-case for any cloud based sync.
-
-Real applications compress to about 68 characters each, so a link is short
-enough to send through any messaging app even with hundreds of entries.
-
-It transfers rather than syncs: each link is a snapshot you choose to accept,
-not a connection that stays live. That is honest, and it is what the export and
-import pair already does, only without the file.
-
-**Effort:** medium. **Value:** removes the most tedious part of using Landed on
-two devices.
-
 ### Duplicate an application
 
 A button in the drawer that opens a new form pre-filled with everything except
@@ -109,9 +85,8 @@ place as soon as the version in the footer starts moving.
 ## Considered and rejected
 
 - **Cloud sync.** An account, a backend and a privacy policy, which is the
-  entire category of thing Landed exists to avoid. Easy sync above covers the
-  real need without any of it.
+  entire category of thing Landed exists to avoid.
 - **A QR code for the sync link.** Measured rather than guessed: a QR code holds
   2953 bytes at most, which works out at roughly 40 to 60 applications. Past
   that it silently stops being an option, and a code that dense is already hard
-  for a phone camera to read. The link alone has no such ceiling.
+  for a phone camera to read.
