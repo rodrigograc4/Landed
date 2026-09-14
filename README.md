@@ -22,10 +22,12 @@ live in your own `localStorage` and never leave the device.
 
 - **Track every application**: company, role, location, work mode, status,
   date, where you found it, a link to the posting and free-form notes.
+- **Favourites**: mark the applications you care about with a heart, and
+  filter to see only those.
 - **Two views**: a dense table for scanning, cards for browsing. Your choice is
   remembered.
 - **Search, filter and sort**: full-text search across company, role, location,
-  source and notes; filter by any combination of statuses and work modes; sort
+  source and notes; filter by favourites, statuses and work modes; sort
   by date, alphabetically, or by how far each application got.
 - **Automatic no-response detection**: an application still marked _Applied_
   after 30 days becomes _No Response_ on its own, so a stale pipeline looks
@@ -49,9 +51,10 @@ The default view, built for scanning a long pipeline. Each row carries the
 company and role together, where the job is and under what work mode, the date,
 the current status as a colour-coded badge, and the start of your notes. Notes
 are clamped to two lines, click anywhere on the row to expand them in place and
-click again to collapse. The pencil on the right opens the application for
-editing, and the arrow next to a company name opens the original posting in a
-new tab.
+click again to collapse. The heart on the left marks a favourite, and turns
+into a briefcase once an application is _Landed_. The pencil on the right opens
+the application for editing, and the arrow next to a company name opens the
+original posting in a new tab.
 
 ### Card view
 
@@ -62,8 +65,8 @@ scan, and the view that works best on a phone. Notes behave exactly as they do
 in the list: two lines, click the card to expand. The toggle in the toolbar
 switches between the two views and your choice is remembered for the next visit.
 
-Open here is the filter menu, which holds statuses and work modes in one place,
-split by a divider. Both groups are multi-select and independent, so the screen
+Open here is the filter menu, which holds a favourites-only switch, statuses and
+work modes in one place, split by dividers. Both groups are multi-select and independent, so the screen
 above is showing applications that are applied _and_ hybrid. Picking an option
 does not close the menu, since you are usually choosing more than one, and the
 badge on the button counts what is active so a filtered list never looks like

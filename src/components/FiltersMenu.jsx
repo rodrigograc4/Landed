@@ -35,6 +35,7 @@ function Option({ selected, onClick, children }) {
 /**
  * Multi-select filter menu. Each group keeps its own list of picked values,
  * an empty list meaning everything, and the menu only closes on outside click.
+ * A group without an `allLabel` is a plain on/off option with no "all" row.
  */
 export default function FiltersMenu({ groups, className = "" }) {
   const { t } = useI18n();
@@ -99,12 +100,14 @@ export default function FiltersMenu({ groups, className = "" }) {
             {groups.map((group, index) => (
               <Fragment key={group.key}>
                 {index > 0 && <hr className="border-bg my-1.5 border-t" />}
-                <Option
-                  selected={group.picked.length === 0}
-                  onClick={() => group.onChange([])}
-                >
-                  {group.allLabel}
-                </Option>
+                {group.allLabel && (
+                  <Option
+                    selected={group.picked.length === 0}
+                    onClick={() => group.onChange([])}
+                  >
+                    {group.allLabel}
+                  </Option>
+                )}
                 {group.options.map((option) => (
                   <Option
                     key={option.value}

@@ -40,7 +40,7 @@ export default function Navbar({ onImport, onExport }) {
 
   return (
     <header className="bg-accent sticky top-0 z-30">
-      <div className="mx-auto flex max-w-6xl items-center gap-1 px-3 py-3 sm:gap-2 sm:px-6">
+      <div className="mx-auto flex max-w-7xl items-center gap-1 px-3 py-3 sm:gap-2 sm:px-6">
         <Link
           to="/"
           className="mr-auto flex min-w-0 items-center gap-2 transition-opacity hover:opacity-80"

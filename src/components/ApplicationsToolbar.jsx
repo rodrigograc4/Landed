@@ -24,6 +24,8 @@ export default function ApplicationsToolbar({
   onViewChange,
   sort,
   onSortChange,
+  favorites,
+  onFavoritesChange,
   statuses,
   onStatusesChange,
   workModes,
@@ -49,6 +51,12 @@ export default function ApplicationsToolbar({
   }));
 
   const filterGroups = [
+    {
+      key: "favorite",
+      options: [{ value: "favorite", label: t("applications.favoritesOnly") }],
+      picked: favorites,
+      onChange: onFavoritesChange,
+    },
     {
       key: "status",
       allLabel: t("applications.allStatuses"),

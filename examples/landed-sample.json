@@ -12,7 +12,7 @@
       "status": "interviewing",
       "date": "2026-08-22",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Technical round scheduled. Stack: React + TypeScript. Range 70-85k EUR.",
       "updatedAt": "2026-08-26T17:07:16.000Z"
     },
@@ -25,7 +25,7 @@
       "status": "applied",
       "date": "2026-08-19",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Applied through their careers page. Recruiter: Anja W.",
       "updatedAt": "2026-08-19T15:45:30.000Z"
     },
@@ -38,7 +38,7 @@
       "status": "offer",
       "date": "2026-08-04",
       "source": "Referral",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Offer at 78k EUR plus equity. Negotiating the start date.",
       "updatedAt": "2026-08-21T20:19:06.000Z"
     },
@@ -51,7 +51,7 @@
       "status": "rejectedAfterInterview",
       "date": "2026-07-28",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Rejected after the second round. Feedback: limited C++ experience.",
       "updatedAt": "2026-08-18T08:38:27.000Z"
     },
@@ -64,7 +64,7 @@
       "status": "ghosted",
       "date": "2026-07-11",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "No reply at all since submitting.",
       "updatedAt": "2026-07-25T19:45:17.000Z"
     },
@@ -77,7 +77,7 @@
       "status": "applied",
       "date": "2026-08-16",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-18T20:19:37.000Z"
     },
@@ -90,7 +90,7 @@
       "status": "applied",
       "date": "2026-08-23",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "On-call rotation is 1 week in 6. Ask about it.",
       "updatedAt": "2026-08-23T22:31:01.000Z"
     },
@@ -103,7 +103,7 @@
       "status": "saved",
       "date": "",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Saved to apply this week.",
       "updatedAt": "2026-08-26T08:52:00.000Z"
     },
@@ -116,7 +116,7 @@
       "status": "applied",
       "date": "2026-08-21",
       "source": "Job board",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-22T18:19:27.000Z"
     },
@@ -129,7 +129,7 @@
       "status": "rejected",
       "date": "2026-08-07",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Rejected at CV screening.",
       "updatedAt": "2026-08-11T16:19:48.000Z"
     },
@@ -142,7 +142,7 @@
       "status": "interviewing",
       "date": "2026-08-20",
       "source": "Referral",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "First call with the hiring manager next Tuesday.",
       "updatedAt": "2026-08-25T16:19:22.000Z"
     },
@@ -155,7 +155,7 @@
       "status": "applied",
       "date": "2026-08-16",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-16T18:19:48.000Z"
     },
@@ -168,7 +168,7 @@
       "status": "saved",
       "date": "",
       "source": "Newsletter",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Requires a publication record. Worth a shot anyway.",
       "updatedAt": "2026-08-19T12:00:26.000Z"
     },
@@ -181,7 +181,7 @@
       "status": "ghosted",
       "date": "2026-07-18",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-04T10:24:07.000Z"
     },
@@ -194,7 +194,7 @@
       "status": "interviewing",
       "date": "2026-08-18",
       "source": "Referral",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Take-home submitted, waiting on feedback.",
       "updatedAt": "2026-08-25T22:52:59.000Z"
     },
@@ -207,7 +207,7 @@
       "status": "rejected",
       "date": "2026-08-01",
       "source": "Career fair",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Wanted five years of low-latency C++.",
       "updatedAt": "2026-08-18T16:19:19.000Z"
     },
@@ -220,7 +220,7 @@
       "status": "applied",
       "date": "2026-08-14",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-15T17:45:54.000Z"
     },
@@ -233,7 +233,7 @@
       "status": "rejected",
       "date": "2026-07-26",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Role closed, filled internally.",
       "updatedAt": "2026-08-15T14:58:54.000Z"
     },
@@ -246,7 +246,7 @@
       "status": "applied",
       "date": "2026-08-12",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-12T15:19:47.000Z"
     },
@@ -259,7 +259,7 @@
       "status": "ghosted",
       "date": "2026-07-04",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-07-30T14:13:23.000Z"
     },
@@ -272,7 +272,7 @@
       "status": "applied",
       "date": "2026-08-24",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Multi-cloud, mostly AWS and GCP.",
       "updatedAt": "2026-08-26T22:31:05.000Z"
     },
@@ -285,7 +285,7 @@
       "status": "applied",
       "date": "2026-08-15",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Applied after their studio tour. Two open QA seats.",
       "updatedAt": "2026-08-16T18:52:06.000Z"
     },
@@ -298,7 +298,7 @@
       "status": "applied",
       "date": "2026-08-17",
       "source": "Job board",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-17T16:38:23.000Z"
     },
@@ -311,7 +311,7 @@
       "status": "interviewing",
       "date": "2026-08-15",
       "source": "Recruiter",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Three rounds: culture, system design and live coding.",
       "updatedAt": "2026-08-24T19:00:30.000Z"
     },
@@ -324,7 +324,7 @@
       "status": "rejectedAfterInterview",
       "date": "2026-07-22",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Reached the final round. Good feedback, they picked another profile.",
       "updatedAt": "2026-07-29T12:58:37.000Z"
     },
@@ -337,7 +337,7 @@
       "status": "applied",
       "date": "2026-08-13",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-15T14:13:10.000Z"
     },
@@ -350,7 +350,7 @@
       "status": "applied",
       "date": "2026-08-20",
       "source": "Referral",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-22T11:00:49.000Z"
     },
@@ -363,7 +363,7 @@
       "status": "ghosted",
       "date": "2026-06-26",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-07-16T16:52:14.000Z"
     },
@@ -376,7 +376,7 @@
       "status": "rejected",
       "date": "2026-07-15",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-07-31T16:31:54.000Z"
     },
@@ -389,7 +389,7 @@
       "status": "applied",
       "date": "2026-08-11",
       "source": "Career fair",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-13T13:45:58.000Z"
     },
@@ -402,7 +402,7 @@
       "status": "rejectedAfterInterview",
       "date": "2026-07-09",
       "source": "Referral",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Strong on modelling, weak on their SQL round.",
       "updatedAt": "2026-07-23T18:52:38.000Z"
     },
@@ -415,7 +415,7 @@
       "status": "interviewing",
       "date": "2026-08-19",
       "source": "Newsletter",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Screening call done. Systems design round next week.",
       "updatedAt": "2026-08-21T14:52:51.000Z"
     },
@@ -428,7 +428,7 @@
       "status": "applied",
       "date": "2026-08-18",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-08-18T16:52:13.000Z"
     },
@@ -441,7 +441,7 @@
       "status": "ghosted",
       "date": "2026-07-01",
       "source": "LinkedIn",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "",
       "updatedAt": "2026-07-28T08:45:55.000Z"
     },
@@ -454,7 +454,7 @@
       "status": "rejected",
       "date": "2026-07-06",
       "source": "Company site",
-      "link": "",
+      "link": "https://www.linkedin.com/jobs/",
       "notes": "Asked for kernel-level depth I do not have yet.",
       "updatedAt": "2026-07-21T17:52:12.000Z"
     }

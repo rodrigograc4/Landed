@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-16">
-      <div className="text-muted mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-6 text-center text-xs sm:flex-row sm:justify-between sm:px-6 sm:text-left">
+      <div className="text-muted mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 py-6 text-center text-xs sm:flex-row sm:justify-between sm:px-6 sm:text-left">
         <p>
           {t("footer.tagline")} · v{__APP_VERSION__}
         </p>

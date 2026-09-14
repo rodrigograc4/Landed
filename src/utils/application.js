@@ -128,6 +128,7 @@ export function normalizeApplication(input) {
     notes: String(input.notes ?? "")
       .trim()
       .slice(0, 2000),
+    favorite: input.favorite === true,
     updatedAt: parseTimestamp(input.updatedAt),
   };
 }
@@ -209,4 +210,5 @@ export const emptyApplication = () => ({
   source: "",
   link: "",
   notes: "",
+  favorite: false,
 });

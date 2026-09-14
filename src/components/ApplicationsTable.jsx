@@ -2,11 +2,11 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
-  faBriefcase,
   faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { StatusBadge } from "./Badge";
 import EmptyState from "./EmptyState";
+import FavoriteMark from "./FavoriteMark";
 import NotesCell from "./NotesCell";
 import { formatDate } from "../utils/application";
 import { useI18n } from "../i18n";
@@ -26,7 +26,7 @@ function LocationCell({ location, workMode }) {
   );
 }
 
-function ApplicationRow({ application, onEdit }) {
+function ApplicationRow({ application, onEdit, onToggleFavorite }) {
   const { t, locale } = useI18n();
   const [expanded, setExpanded] = useState(false);
   const [truncated, setTruncated] = useState(false);
@@ -41,7 +41,14 @@ function ApplicationRow({ application, onEdit }) {
       }`}
       onClick={toggles ? toggle : undefined}
     >
-      <td className="rounded-l-xl px-4 py-3">
+      <td className="w-px rounded-l-xl py-3 pr-0 pl-4">
+        <FavoriteMark
+          application={application}
+          onToggle={onToggleFavorite}
+          className="-ml-2"
+        />
+      </td>
+      <td className="px-4 py-3">
         <div className="text-text flex items-center gap-2 font-bold">
           {application.company}
           {application.link && (
@@ -55,11 +62,6 @@ function ApplicationRow({ application, onEdit }) {
             >
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
             </a>
-          )}
-          {application.status === "landed" && (
-            <span title={t("table.landed")} className="text-briefcase text-xs">
-              <FontAwesomeIcon icon={faBriefcase} />
-            </span>
           )}
         </div>
         <div className="text-muted text-xs">{application.role}</div>
@@ -84,7 +86,7 @@ function ApplicationRow({ application, onEdit }) {
           onToggle={toggle}
         />
       </td>
-      <td className="w-px rounded-r-xl px-4 py-3">
+      <td className="w-px rounded-r-xl py-3 pr-4 pl-0">
         <button
           type="button"
           onClick={(event) => {
@@ -92,7 +94,7 @@ function ApplicationRow({ application, onEdit }) {
             onEdit(application);
           }}
           aria-label={t("table.edit", { company: application.company })}
-          className="text-light-gray hover:text-accent -ml-2.5 rounded-full px-2.5 py-1.5 transition-colors hover:bg-white"
+          className="text-light-gray hover:text-accent -mr-2 rounded-full px-2 py-1.5 text-sm transition-colors hover:bg-white"
         >
           <FontAwesomeIcon icon={faPen} />
         </button>
@@ -101,7 +103,12 @@ function ApplicationRow({ application, onEdit }) {
   );
 }
 
-export default function ApplicationsTable({ applications, onEdit, onCreate }) {
+export default function ApplicationsTable({
+  applications,
+  onEdit,
+  onToggleFavorite,
+  onCreate,
+}) {
   const { t } = useI18n();
 
   if (applications.length === 0) return <EmptyState onCreate={onCreate} />;
@@ -111,12 +118,15 @@ export default function ApplicationsTable({ applications, onEdit, onCreate }) {
       <table className="w-full min-w-[860px] border-collapse text-left text-sm">
         <thead>
           <tr className="text-muted text-[11px] tracking-wider uppercase">
+            <th className="w-px py-3 pr-0 pl-4">
+              <span className="sr-only">{t("table.favorite")}</span>
+            </th>
             <th className="px-4 py-3 font-bold">{t("table.companyRole")}</th>
             <th className="px-4 py-3 font-bold">{t("table.location")}</th>
             <th className="px-4 py-3 font-bold">{t("table.date")}</th>
             <th className="px-4 py-3 font-bold">{t("table.status")}</th>
             <th className="px-4 py-3 font-bold">{t("table.notes")}</th>
-            <th className="relative w-px px-4 py-3">
+            <th className="relative w-px py-3 pr-4 pl-0">
               <span className="sr-only">{t("table.actions")}</span>
             </th>
           </tr>
@@ -127,6 +137,7 @@ export default function ApplicationsTable({ applications, onEdit, onCreate }) {
               key={application.id}
               application={application}
               onEdit={onEdit}
+              onToggleFavorite={onToggleFavorite}
             />
           ))}
         </tbody>

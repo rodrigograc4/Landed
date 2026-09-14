@@ -22,6 +22,7 @@ export default function Applications({ applications, onSave, onDelete }) {
   const [editing, setEditing] = useState(null);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [query, setQuery] = useState("");
+  const [favorites, setFavorites] = useState([]);
   const [statuses, setStatuses] = useState([]);
   const [workModes, setWorkModes] = useState([]);
   const [sort, setSort] = useState("date");
@@ -36,6 +37,7 @@ export default function Applications({ applications, onSave, onDelete }) {
     const term = query.trim().toLowerCase();
 
     const matches = applications.filter((application) => {
+      const matchesFavorite = favorites.length === 0 || application.favorite;
       const matchesStatus =
         statuses.length === 0 ||
         statuses.some((value) =>
@@ -57,11 +59,11 @@ export default function Applications({ applications, onSave, onDelete }) {
           .join(" ")
           .toLowerCase()
           .includes(term);
-      return matchesStatus && matchesWorkMode && matchesTerm;
+      return matchesFavorite && matchesStatus && matchesWorkMode && matchesTerm;
     });
 
     return sortApplications(matches, sort);
-  }, [applications, query, sort, statuses, workModes]);
+  }, [applications, query, sort, favorites, statuses, workModes]);
 
   const totalPages = Math.max(Math.ceil(visible.length / PAGE_SIZE), 1);
 
@@ -72,7 +74,7 @@ export default function Applications({ applications, onSave, onDelete }) {
 
   useEffect(() => {
     setPage(1);
-  }, [query, sort, statuses, workModes]);
+  }, [query, sort, favorites, statuses, workModes]);
 
   const pageStart = (Math.min(page, totalPages) - 1) * PAGE_SIZE;
   const paginated = useMemo(
@@ -100,6 +102,9 @@ export default function Applications({ applications, onSave, onDelete }) {
     setDrawerOpen(false);
     setEditing(null);
   };
+
+  const toggleFavorite = (application) =>
+    onSave({ ...application, favorite: !application.favorite });
 
   const handleConfirmDelete = () => {
     onDelete(pendingDelete.id);
@@ -141,6 +146,8 @@ export default function Applications({ applications, onSave, onDelete }) {
           onViewChange={setView}
           sort={sort}
           onSortChange={setSort}
+          favorites={favorites}
+          onFavoritesChange={setFavorites}
           statuses={statuses}
           onStatusesChange={setStatuses}
           workModes={workModes}
@@ -153,12 +160,14 @@ export default function Applications({ applications, onSave, onDelete }) {
           <ApplicationsGrid
             applications={paginated}
             onEdit={openEdit}
+            onToggleFavorite={toggleFavorite}
             onCreate={openCreate}
           />
         ) : (
           <ApplicationsTable
             applications={paginated}
             onEdit={openEdit}
+            onToggleFavorite={toggleFavorite}
             onCreate={openCreate}
           />
         )}

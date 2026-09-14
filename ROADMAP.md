@@ -5,22 +5,6 @@ promise, and nothing here is required for the app to be useful today.
 
 ## Possibilities
 
-### Favourites
-
-A way to mark the applications you care most about.
-
-In `ApplicationDrawer.jsx`, a new "Favourite" field at the end of the form,
-below the notes, with an empty grey heart. Clicking it turns the heart red and
-sets `favorite: true` on the application. A favourite shows a red heart next to
-the link icon in the row and the card, in the same slot as the Landed
-briefcase.
-
-The field goes through `normalizeApplication` like every other, defaulting to
-`false`, so old backups import unchanged. A "favourites only" filter in the
-toolbar is a natural follow-on but not required for the first version.
-
-**Effort:** small.
-
 ### Tests for the import flow
 
 `normalizeApplication` and `readBackup` are covered, but the merge and replace

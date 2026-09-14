@@ -2,13 +2,13 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
-  faBriefcase,
   faCalendarDay,
   faLocationDot,
   faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { StatusBadge } from "./Badge";
 import EmptyState from "./EmptyState";
+import FavoriteMark from "./FavoriteMark";
 import NotesCell from "./NotesCell";
 import { formatDate } from "../utils/application";
 import { useI18n } from "../i18n";
@@ -22,7 +22,7 @@ function Meta({ icon, children }) {
   );
 }
 
-function ApplicationCard({ application, onEdit }) {
+function ApplicationCard({ application, onEdit, onToggleFavorite }) {
   const { t, locale } = useI18n();
   const [expanded, setExpanded] = useState(false);
   const [truncated, setTruncated] = useState(false);
@@ -60,14 +60,6 @@ function ApplicationCard({ application, onEdit }) {
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </a>
             )}
-            {application.status === "landed" && (
-              <span
-                title={t("table.landed")}
-                className="text-briefcase shrink-0 text-xs"
-              >
-                <FontAwesomeIcon icon={faBriefcase} />
-              </span>
-            )}
           </h3>
           <p className="text-muted truncate text-sm">{application.role}</p>
         </div>
@@ -93,22 +85,30 @@ function ApplicationCard({ application, onEdit }) {
         className="text-sm"
       />
 
-      <button
-        type="button"
-        onClick={(event) => {
-          event.stopPropagation();
-          onEdit(application);
-        }}
-        aria-label={t("table.edit", { company: application.company })}
-        className="text-light-gray hover:text-accent mt-auto self-end rounded-full px-2 py-1.5 text-sm transition-colors hover:bg-white"
-      >
-        <FontAwesomeIcon icon={faPen} />
-      </button>
+      <div className="mt-auto flex items-center justify-end gap-1">
+        <FavoriteMark application={application} onToggle={onToggleFavorite} />
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onEdit(application);
+          }}
+          aria-label={t("table.edit", { company: application.company })}
+          className="text-light-gray hover:text-accent rounded-full px-2 py-1.5 text-sm transition-colors hover:bg-white"
+        >
+          <FontAwesomeIcon icon={faPen} />
+        </button>
+      </div>
     </article>
   );
 }
 
-export default function ApplicationsGrid({ applications, onEdit, onCreate }) {
+export default function ApplicationsGrid({
+  applications,
+  onEdit,
+  onToggleFavorite,
+  onCreate,
+}) {
   if (applications.length === 0) return <EmptyState onCreate={onCreate} />;
 
   return (
@@ -118,6 +118,7 @@ export default function ApplicationsGrid({ applications, onEdit, onCreate }) {
           key={application.id}
           application={application}
           onEdit={onEdit}
+          onToggleFavorite={onToggleFavorite}
         />
       ))}
     </div>

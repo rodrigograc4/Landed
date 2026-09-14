@@ -25,7 +25,7 @@ export default function ConfirmDialog({
         <button
           type="button"
           onClick={onConfirm}
-          className="flex-1 rounded-full bg-rose-600 px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-90"
+          className="flex-1 rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-90"
         >
           {t("confirm.delete")}
         </button>

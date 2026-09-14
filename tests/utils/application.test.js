@@ -19,6 +19,17 @@ const daysAgo = (days) => {
 const base = { company: "Feedzai", role: "Frontend Engineer" };
 
 describe("normalizeApplication", () => {
+  it("keeps favourites and defaults everything else to false", () => {
+    const base = { company: "A", role: "r" };
+    expect(normalizeApplication({ ...base, favorite: true }).favorite).toBe(
+      true,
+    );
+    expect(normalizeApplication(base).favorite).toBe(false);
+    expect(normalizeApplication({ ...base, favorite: "yes" }).favorite).toBe(
+      false,
+    );
+  });
+
   it("drops entries with neither company nor role", () => {
     expect(normalizeApplication({ location: "Lisboa" })).toBeNull();
     expect(normalizeApplication(null)).toBeNull();
