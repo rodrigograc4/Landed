@@ -63,7 +63,7 @@ function ApplicationCard({ application, onEdit }) {
             {application.status === "landed" && (
               <span
                 title={t("table.landed")}
-                className="text-accent shrink-0 text-xs"
+                className="text-briefcase shrink-0 text-xs"
               >
                 <FontAwesomeIcon icon={faBriefcase} />
               </span>

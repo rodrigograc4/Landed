@@ -11,6 +11,7 @@
   --color-accent: #0b5c45;
   --color-focus: #8dafa5;
   --radius-surface: 20px;
+  --color-briefcase: #a06841;
 }
 
 @layer base {

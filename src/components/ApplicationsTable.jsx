@@ -57,7 +57,7 @@ function ApplicationRow({ application, onEdit }) {
             </a>
           )}
           {application.status === "landed" && (
-            <span title={t("table.landed")} className="text-accent text-xs">
+            <span title={t("table.landed")} className="text-briefcase text-xs">
               <FontAwesomeIcon icon={faBriefcase} />
             </span>
           )}
