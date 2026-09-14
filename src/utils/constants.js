@@ -3,6 +3,7 @@ export const STATUS_VALUES = [
   "applied",
   "interviewing",
   "offer",
+  "landed",
   "rejected",
   "rejectedAfterInterview",
   "ghosted",
@@ -11,6 +12,7 @@ export const STATUS_VALUES = [
 export const INTERVIEWED_STATUSES = [
   "interviewing",
   "offer",
+  "landed",
   "rejectedAfterInterview",
 ];
 
@@ -26,6 +28,8 @@ export const UNSUCCESSFUL_STATUSES = [
 
 export const STATUS_WITHOUT_DATE = "saved";
 
+export const STATUS_GROUPS = { landed: "offer" };
+
 export const STATUS_COLORS = {
   saved: {
     fill: "bg-orange-200",
@@ -39,6 +43,11 @@ export const STATUS_COLORS = {
     bar: "bg-violet-300",
   },
   offer: {
+    fill: "bg-emerald-200",
+    text: "text-emerald-900",
+    bar: "bg-emerald-300",
+  },
+  landed: {
     fill: "bg-emerald-200",
     text: "text-emerald-900",
     bar: "bg-emerald-300",
@@ -75,6 +84,7 @@ export const PAGE_SIZE = 15;
 export const SORT_VALUES = ["date", "company", "result"];
 
 export const RESULT_ORDER = [
+  "landed",
   "offer",
   "interviewing",
   "applied",

@@ -45,6 +45,20 @@ describe("computeStats", () => {
     expect(keys).not.toContain("saved");
   });
 
+  it("counts landed applications as offers in the funnel", () => {
+    const { byStatus } = computeStats([
+      application("offer"),
+      application("landed"),
+    ]);
+    const keys = byStatus.map((item) => item.key);
+
+    expect(keys).not.toContain("landed");
+    expect(byStatus.find((item) => item.key === "offer")).toMatchObject({
+      count: 2,
+      percent: 100,
+    });
+  });
+
   it("groups locations and sources, case insensitively", () => {
     const stats = computeStats([
       application("applied", { location: "Lisboa", source: "LinkedIn" }),

@@ -14,6 +14,7 @@ export default {
     applied: "Aplicado",
     interviewing: "Em Entrevista",
     offer: "Proposta Recebida",
+    landed: "Colocado",
     rejected: "Rejeitado",
     rejectedAfterInterview: "Rejeitado Após Entrevista",
     ghosted: "Sem Resposta",
@@ -61,6 +62,7 @@ export default {
     notes: "Notas",
     actions: "Ações",
     openPosting: "Abrir anúncio",
+    landed: "Colocado",
     edit: "Editar candidatura na {company}",
   },
 

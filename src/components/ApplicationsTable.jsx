@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
+  faBriefcase,
   faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { StatusBadge } from "./Badge";
@@ -54,6 +55,11 @@ function ApplicationRow({ application, onEdit }) {
             >
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
             </a>
+          )}
+          {application.status === "landed" && (
+            <span title={t("table.landed")} className="text-accent text-xs">
+              <FontAwesomeIcon icon={faBriefcase} />
+            </span>
           )}
         </div>
         <div className="text-muted text-xs">{application.role}</div>

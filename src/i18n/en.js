@@ -14,6 +14,7 @@ export default {
     applied: "Applied",
     interviewing: "Interviewing",
     offer: "Offer Received",
+    landed: "Landed",
     rejected: "Rejected",
     rejectedAfterInterview: "Rejected After Interview",
     ghosted: "No Response",
@@ -61,6 +62,7 @@ export default {
     notes: "Notes",
     actions: "Actions",
     openPosting: "Open job posting",
+    landed: "Landed",
     edit: "Edit application at {company}",
   },
 

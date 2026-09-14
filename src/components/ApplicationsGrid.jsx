@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
+  faBriefcase,
   faCalendarDay,
   faLocationDot,
   faPen,
@@ -58,6 +59,14 @@ function ApplicationCard({ application, onEdit }) {
               >
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </a>
+            )}
+            {application.status === "landed" && (
+              <span
+                title={t("table.landed")}
+                className="text-accent shrink-0 text-xs"
+              >
+                <FontAwesomeIcon icon={faBriefcase} />
+              </span>
             )}
           </h3>
           <p className="text-muted truncate text-sm">{application.role}</p>

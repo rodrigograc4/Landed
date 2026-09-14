@@ -2,6 +2,7 @@ import {
   ACTIVE_STATUSES,
   INTERVIEWED_STATUSES,
   RESPONDED_STATUSES,
+  STATUS_GROUPS,
   STATUS_VALUES,
   STATUS_WITHOUT_DATE,
   TIMELINE_WEEKS,
@@ -88,10 +89,11 @@ export function computeStats(applications) {
   ).length;
 
   const byStatus = STATUS_VALUES.filter(
-    (value) => value !== STATUS_WITHOUT_DATE,
+    (value) => value !== STATUS_WITHOUT_DATE && !STATUS_GROUPS[value],
   ).map((value) => {
     const count = sent.filter(
-      (application) => application.status === value,
+      (application) =>
+        (STATUS_GROUPS[application.status] ?? application.status) === value,
     ).length;
     return { key: value, count, percent: percent(count, total) };
   });
