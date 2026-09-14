@@ -8,6 +8,7 @@ import FiltersMenu from "./FiltersMenu";
 import ViewToggle from "./ViewToggle";
 import {
   SORT_VALUES,
+  STATUS_GROUPS,
   STATUS_VALUES,
   UNSUCCESSFUL,
   UNSUCCESSFUL_STATUSES,
@@ -35,7 +36,8 @@ export default function ApplicationsToolbar({
 
   const statusOptions = [
     ...STATUS_VALUES.filter(
-      (value) => !UNSUCCESSFUL_STATUSES.includes(value),
+      (value) =>
+        !UNSUCCESSFUL_STATUSES.includes(value) && !STATUS_GROUPS[value],
     ).map((value) => ({ value, label: t(`status.${value}`) })),
     { value: UNSUCCESSFUL, label: t("applications.unsuccessful") },
   ];

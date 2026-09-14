@@ -10,6 +10,7 @@ import Pagination from "../components/Pagination";
 import {
   PAGE_SIZE,
   UNSUCCESSFUL,
+  STATUS_GROUPS,
   UNSUCCESSFUL_STATUSES,
 } from "../utils/constants";
 import { sortApplications } from "../utils/application";
@@ -43,7 +44,8 @@ export default function Applications({ applications, onSave, onDelete }) {
         statuses.some((value) =>
           value === UNSUCCESSFUL
             ? UNSUCCESSFUL_STATUSES.includes(application.status)
-            : application.status === value,
+            : (STATUS_GROUPS[application.status] ?? application.status) ===
+              value,
         );
       const matchesWorkMode =
         workModes.length === 0 || workModes.includes(application.workMode);
