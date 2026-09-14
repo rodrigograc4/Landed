@@ -5,14 +5,7 @@ promise, and nothing here is required for the app to be useful today.
 
 ## Possibilities
 
-### Tests for the import flow
-
-`normalizeApplication` and `readBackup` are covered, but the merge and replace
-paths in `App.jsx` are not, and those are the only two operations in the app
-that can destroy data. Component tests need `environment: jsdom` in the Vitest
-config and Testing Library, neither of which is set up yet.
-
-**Effort:** small. **Value:** insurance on the one irreversible action.
+Nothing planned right now.
 
 ## Versioning
 
