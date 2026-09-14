@@ -37,7 +37,7 @@ live in your own `localStorage` and never leave the device.
   last 8 weeks.
 - **Backup you control**: export everything to a JSON file, import it back,
   merging with what is there or replacing it. Invalid entries are skipped, never
-  imported half-broken.
+  imported half-broken. A CSV export is there too, for spreadsheets.
 - **English and Portuguese**: detected from your browser, switchable at any
   time.
 

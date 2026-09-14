@@ -80,17 +80,64 @@ export async function importApplications(file) {
   }
 }
 
-export function exportApplications(applications) {
-  const blob = new Blob([buildBackup(applications)], {
-    type: "application/json;charset=utf-8",
-  });
+const CSV_COLUMNS = [
+  ["company", "form.company"],
+  ["role", "form.role"],
+  ["location", "form.location"],
+  ["workMode", "form.workMode"],
+  ["status", "form.status"],
+  ["date", "form.date"],
+  ["source", "form.source"],
+  ["link", "form.link"],
+  ["notes", "form.notes"],
+  ["favorite", "form.favorite"],
+];
+
+/** Quotes a cell only when it holds a comma, quote or line break. */
+const csvCell = (value) => {
+  const text = String(value ?? "");
+  return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+};
+
+const csvValue = (application, key, t) => {
+  if (key === "status") return t(`status.${application.status}`);
+  if (key === "workMode") return t(`workMode.${application.workMode}`);
+  if (key === "favorite") return application.favorite ? "✓" : "";
+  return application[key];
+};
+
+/**
+ * Writes the applications as a spreadsheet, with headers and labels in the
+ * current language. One way only: CSV is never read back.
+ */
+export const buildCsv = (applications, t) =>
+  [
+    CSV_COLUMNS.map(([, label]) => csvCell(t(label))).join(","),
+    ...applications.map((application) =>
+      CSV_COLUMNS.map(([key]) => csvCell(csvValue(application, key, t))).join(
+        ",",
+      ),
+    ),
+  ].join("\r\n");
+
+const download = (content, type, extension) => {
+  const blob = new Blob([content], { type: `${type};charset=utf-8` });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
 
   link.href = url;
-  link.download = `landed-${new Date().toISOString().slice(0, 10)}.json`;
+  link.download = `landed-${new Date().toISOString().slice(0, 10)}.${extension}`;
   document.body.appendChild(link);
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
+};
+
+export function exportApplications(applications) {
+  download(buildBackup(applications), "application/json", "json");
+}
+
+/** The byte order mark makes Excel read accents as UTF-8. */
+export function exportApplicationsCsv(applications, t) {
+  download(`\uFEFF${buildCsv(applications, t)}`, "text/csv", "csv");
 }

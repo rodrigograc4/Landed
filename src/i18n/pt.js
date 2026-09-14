@@ -4,8 +4,9 @@ export default {
   nav: {
     stats: "Estatísticas",
     backup: "Backup",
-    import: "Importar",
-    export: "Exportar",
+    import: "Importar JSON",
+    export: "Exportar JSON",
+    exportCsv: "Exportar CSV",
     github: "Repositório open source no GitHub",
   },
 
@@ -15,8 +16,6 @@ export default {
     interviewing: "Em Entrevista",
     offer: "Proposta Recebida",
     landed: "Colocado",
-    favorite: "Marcar como favorito",
-    unfavorite: "Remover dos favoritos",
     rejected: "Rejeitado",
     rejectedAfterInterview: "Rejeitado Após Entrevista",
     ghosted: "Sem Resposta",
@@ -66,6 +65,8 @@ export default {
     actions: "Ações",
     openPosting: "Abrir anúncio",
     landed: "Colocado",
+    favorite: "Marcar como favorito",
+    unfavorite: "Remover dos favoritos",
     edit: "Editar candidatura na {company}",
   },
 
@@ -85,6 +86,7 @@ export default {
     sourcePlaceholder: "Ex: LinkedIn, referência, site da empresa",
     link: "Link do anúncio",
     notes: "Notas / Feedback",
+    favorite: "Favorito",
     notesPlaceholder: "Contactos, banda salarial, feedback de entrevistas...",
     cancel: "Cancelar",
     save: "Guardar alterações",

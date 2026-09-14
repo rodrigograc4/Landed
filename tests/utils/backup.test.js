@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readBackup } from "../../src/utils/backup";
+import { buildCsv, readBackup } from "../../src/utils/backup";
 
 const entry = { company: "Feedzai", role: "Frontend Engineer" };
 
@@ -53,5 +53,27 @@ describe("readBackup", () => {
     );
     expect(result.applications[0].status).toBe("applied");
     expect(result.applications[0].link).toBe("https://evil.com/");
+  });
+});
+
+describe("buildCsv", () => {
+  const t = (key) => key;
+
+  it("writes a header row and one row per application", () => {
+    const lines = buildCsv(
+      [{ ...entry, status: "offer", workMode: "remote", favorite: true }],
+      t,
+    ).split("\r\n");
+
+    expect(lines).toHaveLength(2);
+    expect(lines[0].split(",")[0]).toBe("form.company");
+    expect(lines[1]).toContain("status.offer");
+    expect(lines[1]).toContain("workMode.remote");
+    expect(lines[1].endsWith("✓")).toBe(true);
+  });
+
+  it("escapes commas, quotes and line breaks", () => {
+    const csv = buildCsv([{ ...entry, notes: 'Said "maybe",\ncall back' }], t);
+    expect(csv).toContain('"Said ""maybe"",\ncall back"');
   });
 });

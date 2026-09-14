@@ -7,6 +7,7 @@ import {
   faDatabase,
   faFileArrowDown,
   faFileArrowUp,
+  faFileCsv,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -28,7 +29,7 @@ const Label = ({ children }) => (
   <span className="hidden sm:inline">{children}</span>
 );
 
-export default function Navbar({ onImport, onExport }) {
+export default function Navbar({ onImport, onExport, onExportCsv }) {
   const fileInput = useRef(null);
   const { t, language, setLanguage } = useI18n();
 
@@ -76,6 +77,9 @@ export default function Navbar({ onImport, onExport }) {
           </DropdownItem>
           <DropdownItem icon={faFileArrowDown} onClick={onExport}>
             {t("nav.export")}
+          </DropdownItem>
+          <DropdownItem icon={faFileCsv} onClick={onExportCsv}>
+            {t("nav.exportCsv")}
           </DropdownItem>
         </Dropdown>
 

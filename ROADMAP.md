@@ -14,19 +14,6 @@ config and Testing Library, neither of which is set up yet.
 
 **Effort:** small. **Value:** insurance on the one irreversible action.
 
-### CSV export
-
-A second entry in the Backup menu that writes the applications as columns, ready
-for Excel or Sheets.
-
-It complements the JSON export rather than replacing it. JSON is the format the
-app can read back without losing anything; CSV is a one-way trip for people who
-want to run their own numbers. Most of `exportApplications` is reusable and only
-the serialisation changes, but commas, quotes and line breaks inside notes must
-be escaped properly, which is exactly where these exports usually break.
-
-**Effort:** small, with one fiddly detail.
-
 ## Versioning
 
 In place. The number lives in `package.json`, is injected by Vite as

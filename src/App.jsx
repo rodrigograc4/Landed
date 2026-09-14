@@ -12,7 +12,11 @@ import ImportDialog from "./components/ImportDialog";
 import Applications from "./pages/Applications";
 import Stats from "./pages/Stats";
 import useApplications from "./hooks/useApplications";
-import { exportApplications, importApplications } from "./utils/backup";
+import {
+  exportApplications,
+  exportApplicationsCsv,
+  importApplications,
+} from "./utils/backup";
 import { willReplace } from "./utils/application";
 import { useI18n } from "./i18n";
 
@@ -40,15 +44,21 @@ export default function App() {
     notify(t("file.storageFailed"), "error");
   }, [notify, storageFailed, t]);
 
-  const handleExport = useCallback(() => {
-    if (applications.length === 0) {
-      notify(t("file.nothingToExport"), "error");
-      return;
-    }
+  const exportWith = useCallback(
+    (write) => {
+      if (applications.length === 0) {
+        notify(t("file.nothingToExport"), "error");
+        return;
+      }
 
-    exportApplications(applications);
-    notify(t("file.exported", { count: applications.length }));
-  }, [applications, notify, t]);
+      write(applications, t);
+      notify(t("file.exported", { count: applications.length }));
+    },
+    [applications, notify, t],
+  );
+
+  const handleExport = () => exportWith(exportApplications);
+  const handleExportCsv = () => exportWith(exportApplicationsCsv);
 
   const handleImport = useCallback(
     async (file) => {
@@ -90,7 +100,11 @@ export default function App() {
   return (
     <Router>
       <div className="bg-bg text-text flex min-h-screen flex-col">
-        <Navbar onImport={handleImport} onExport={handleExport} />
+        <Navbar
+          onImport={handleImport}
+          onExport={handleExport}
+          onExportCsv={handleExportCsv}
+        />
 
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
           <Routes>
