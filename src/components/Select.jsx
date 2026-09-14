@@ -79,7 +79,7 @@ export default function Select({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.12 }}
-            className="bg-surface absolute z-40 mt-2 max-h-72 w-full overflow-auto rounded-2xl p-1.5 shadow-xl"
+            className="bg-surface absolute z-40 mt-2 w-full rounded-2xl p-1.5 shadow-xl"
           >
             {options.map((option, index) => {
               const isSelected = option.value === value;
