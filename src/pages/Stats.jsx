@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import {
-  faBriefcase,
   faComments,
+  faFileLines,
   faHourglassHalf,
   faReply,
 } from "@fortawesome/free-solid-svg-icons";
@@ -41,14 +41,15 @@ export default function Stats({ applications }) {
           label={t("stats.total")}
           value={stats.total}
           hint={t("stats.totalHint")}
-          icon={faBriefcase}
+          icon={faFileLines}
+          accent="text-sky-700"
         />
         <StatCard
           label={t("stats.responseRate")}
           value={formatPercent(stats.responseRate)}
           hint={t("stats.responseHint", { count: stats.responded })}
           icon={faReply}
-          accent="text-sky-700"
+          accent="text-accent"
         />
         <StatCard
           label={t("stats.interviewRate")}
