@@ -5,15 +5,7 @@ promise, and nothing here is required for the app to be useful today.
 
 ## Possibilities
 
-### Sync with Google Drive
-
-An optional "Sync with Google" entry in the Backup menu, and nothing that runs on its own. Clicking it signs in with Google if needed, reads a backup file from the app's hidden folder in the user's own Drive (`appDataFolder`), merges it with what is in the browser using the same merge as import, and writes the result back.
-
-No server and no account of ours: the data lives in the user's Drive and only this app can see that folder. Sync stays manual on purpose, which avoids background conflicts, failed uploads and the one-hour Google token expiring mid-session. Apple is left out, since Sign in with Apple needs a paid developer account and gives no storage.
-
-Needs a Google Cloud client id and consent screen.
-
-**Effort:** medium.
+Nothing planned right now.
 
 ## Versioning
 
