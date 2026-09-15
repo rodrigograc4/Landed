@@ -99,6 +99,7 @@ export const UNKNOWN_KEY = "__unknown__";
 export const UNSUCCESSFUL = "unsuccessful";
 
 export const STORAGE_KEY = "landed:applications";
+export const DELETED_KEY = "landed:deleted";
 export const VIEW_KEY = "landed:view";
 export const LANGUAGE_KEY = "landed:language";
 

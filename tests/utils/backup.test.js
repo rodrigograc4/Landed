@@ -56,6 +56,27 @@ describe("readBackup", () => {
   });
 });
 
+describe("readBackup deletions", () => {
+  it("reads the deletion log and skips broken records", () => {
+    const result = readBackup(
+      JSON.stringify({
+        applications: [entry],
+        deleted: [
+          { id: "gone", deletedAt: "2026-03-08T10:00:00Z" },
+          { id: "", deletedAt: "2026-03-08T10:00:00Z" },
+        ],
+      }),
+    );
+    expect(result.deleted).toEqual([
+      { id: "gone", deletedAt: "2026-03-08T10:00:00.000Z" },
+    ]);
+  });
+
+  it("has an empty log for files without one", () => {
+    expect(readBackup(JSON.stringify([entry])).deleted).toEqual([]);
+  });
+});
+
 describe("buildCsv", () => {
   const t = (key) => key;
 

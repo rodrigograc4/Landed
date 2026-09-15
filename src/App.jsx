@@ -17,13 +17,20 @@ import {
   exportApplicationsCsv,
   importApplications,
 } from "./utils/backup";
-import { willReplace } from "./utils/application";
+import { planMerge } from "./utils/application";
 import { useI18n } from "./i18n";
 
 export default function App() {
   const { t } = useI18n();
-  const { applications, storageFailed, upsert, remove, replaceAll, mergeAll } =
-    useApplications();
+  const {
+    applications,
+    deleted,
+    storageFailed,
+    upsert,
+    remove,
+    replaceAll,
+    applyMerge,
+  } = useApplications();
   const [toast, setToast] = useState(null);
   const [pendingImport, setPendingImport] = useState(null);
 
@@ -57,7 +64,8 @@ export default function App() {
     [applications, notify, t],
   );
 
-  const handleExport = () => exportWith(exportApplications);
+  const handleExport = () =>
+    exportWith((list) => exportApplications(list, deleted));
   const handleExportCsv = () => exportWith(exportApplicationsCsv);
 
   const handleImport = useCallback(
@@ -76,25 +84,25 @@ export default function App() {
 
   const applyImport = useCallback(
     (mode) => {
-      const incoming = pendingImport.applications;
+      const incoming = pendingImport;
       setPendingImport(null);
 
       if (mode === "replace") {
         replaceAll(incoming);
-        notify(t("file.replaced", { count: incoming.length }));
+        notify(t("file.replaced", { count: incoming.applications.length }));
         return;
       }
 
-      const known = new Set(applications.map((item) => item.id));
-      const added = incoming.filter((item) => !known.has(item.id)).length;
-      const updated = incoming.filter((item) =>
-        willReplace(applications, item),
-      ).length;
-
-      mergeAll(incoming);
-      notify(t("file.merged", { added, updated }));
+      const merged = planMerge({ applications, deleted }, incoming);
+      applyMerge(merged);
+      notify(
+        t(
+          merged.removed > 0 ? "file.mergedWithRemoved" : "file.merged",
+          merged,
+        ),
+      );
     },
-    [applications, mergeAll, notify, pendingImport, replaceAll, t],
+    [applications, applyMerge, deleted, notify, pendingImport, replaceAll, t],
   );
 
   return (

@@ -9,7 +9,11 @@ import {
 } from "@testing-library/react";
 import App from "../../src/App";
 import { I18nProvider } from "../../src/i18n/I18nProvider";
-import { LANGUAGE_KEY, STORAGE_KEY } from "../../src/utils/constants";
+import {
+  DELETED_KEY,
+  LANGUAGE_KEY,
+  STORAGE_KEY,
+} from "../../src/utils/constants";
 
 globalThis.__APP_VERSION__ = "test";
 
@@ -120,6 +124,24 @@ describe("importing a backup", () => {
         .map((item) => item.id)
         .sort(),
     ).toEqual(["a", "b"]);
+  });
+
+  it("does not bring back an application deleted before the merge", async () => {
+    localStorage.setItem(
+      DELETED_KEY,
+      JSON.stringify([{ id: "c", deletedAt: "2026-09-13T10:00:00.000Z" }]),
+    );
+    renderApp();
+    importFile(JSON.stringify(backup));
+
+    fireEvent.click(await screen.findByText("Merge with current"));
+
+    await waitFor(() =>
+      expect(readStorage().find((item) => item.id === "a").status).toBe(
+        "offer",
+      ),
+    );
+    expect(readStorage().some((item) => item.id === "c")).toBe(false);
   });
 
   it("never opens the dialog for an invalid file", async () => {

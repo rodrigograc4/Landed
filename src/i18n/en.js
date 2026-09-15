@@ -146,6 +146,8 @@ export default {
     nothingToExport: "There are no applications to export.",
     replaced: "{count} applications imported, replacing the previous ones.",
     merged: "{added} applications added · {updated} updated.",
+    mergedWithRemoved:
+      "{added} applications added · {updated} updated · {removed} removed.",
     storageFailed:
       "Could not save to this browser. Changes may be lost when you close the page.",
     readError: "The file could not be read.",

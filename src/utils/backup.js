@@ -1,4 +1,4 @@
-import { normalizeApplication } from "./application";
+import { normalizeApplication, normalizeDeletion } from "./application";
 
 const BACKUP_FORMAT = "landed-backup";
 
@@ -8,7 +8,13 @@ const BACKUP_FORMAT = "landed-backup";
  * errorKey.
  */
 export function readBackup(text) {
-  const empty = { applications: [], imported: 0, skipped: 0, errorKey: null };
+  const empty = {
+    applications: [],
+    deleted: [],
+    imported: 0,
+    skipped: 0,
+    errorKey: null,
+  };
 
   if (typeof text !== "string" || text.trim() === "") {
     return { ...empty, errorKey: "file.emptyFile" };
@@ -39,21 +45,27 @@ export function readBackup(text) {
     return { ...empty, skipped, errorKey: "file.noValidEntries" };
   }
 
+  const deleted = Array.isArray(payload?.deleted)
+    ? payload.deleted.map(normalizeDeletion).filter(Boolean)
+    : [];
+
   return {
     applications,
+    deleted,
     imported: applications.length,
     skipped,
     errorKey: null,
   };
 }
 
-const buildBackup = (applications) =>
+const buildBackup = (applications, deleted) =>
   JSON.stringify(
     {
       format: BACKUP_FORMAT,
       app: __APP_VERSION__,
       exportedAt: new Date().toISOString(),
       applications,
+      deleted,
     },
     null,
     2,
@@ -73,6 +85,7 @@ export async function importApplications(file) {
   } catch {
     return {
       applications: [],
+      deleted: [],
       imported: 0,
       skipped: 0,
       errorKey: "file.readError",
@@ -133,8 +146,8 @@ const download = (content, type, extension) => {
   URL.revokeObjectURL(url);
 };
 
-export function exportApplications(applications) {
-  download(buildBackup(applications), "application/json", "json");
+export function exportApplications(applications, deleted = []) {
+  download(buildBackup(applications, deleted), "application/json", "json");
 }
 
 /** The byte order mark makes Excel read accents as UTF-8. */

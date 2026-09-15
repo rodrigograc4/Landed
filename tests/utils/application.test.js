@@ -4,7 +4,10 @@ import {
   formatDate,
   hasDate,
   mergeApplications,
+  mergeDeletions,
   normalizeApplication,
+  normalizeDeletion,
+  planMerge,
   sortApplications,
   willReplace,
 } from "../../src/utils/application";
@@ -236,5 +239,77 @@ describe("willReplace", () => {
     expect(willReplace(current, item("2026-03-08T10:00:00.000Z"))).toBe(true);
     expect(willReplace(current, item("2026-03-06T10:00:00.000Z"))).toBe(false);
     expect(willReplace(current, { id: "other", updatedAt: "" })).toBe(false);
+  });
+});
+
+describe("deletion log", () => {
+  const app = (id, updatedAt) => ({
+    ...normalizeApplication({ company: "Feedzai", role: "Dev", updatedAt }),
+    id,
+  });
+  const gone = (id, deletedAt) => ({ id, deletedAt });
+
+  it("drops invalid deletion records", () => {
+    expect(normalizeDeletion(gone("a", "2026-03-07T10:00:00Z"))).toEqual(
+      gone("a", "2026-03-07T10:00:00.000Z"),
+    );
+    expect(normalizeDeletion(gone("", "2026-03-07T10:00:00Z"))).toBeNull();
+    expect(normalizeDeletion(gone("a", "nope"))).toBeNull();
+    expect(normalizeDeletion(null)).toBeNull();
+  });
+
+  it("keeps the latest deletion of each id", () => {
+    expect(
+      mergeDeletions(
+        [gone("a", "2026-03-07T10:00:00.000Z")],
+        [
+          gone("a", "2026-03-09T10:00:00.000Z"),
+          gone("b", "2026-03-01T10:00:00.000Z"),
+        ],
+      ),
+    ).toEqual([
+      gone("a", "2026-03-09T10:00:00.000Z"),
+      gone("b", "2026-03-01T10:00:00.000Z"),
+    ]);
+  });
+
+  it("does not bring back an application deleted here", () => {
+    const result = planMerge(
+      { applications: [], deleted: [gone("a", "2026-03-08T10:00:00.000Z")] },
+      { applications: [app("a", "2026-03-07T10:00:00Z")], deleted: [] },
+    );
+
+    expect(result.applications).toHaveLength(0);
+    expect(result.added).toBe(0);
+  });
+
+  it("removes an application deleted in the file", () => {
+    const result = planMerge(
+      { applications: [app("a", "2026-03-07T10:00:00Z")], deleted: [] },
+      { applications: [], deleted: [gone("a", "2026-03-08T10:00:00.000Z")] },
+    );
+
+    expect(result.applications).toHaveLength(0);
+    expect(result.removed).toBe(1);
+    expect(result.deleted).toHaveLength(1);
+  });
+
+  it("keeps an application edited after it was deleted", () => {
+    const result = planMerge(
+      { applications: [app("a", "2026-03-09T10:00:00Z")], deleted: [] },
+      { applications: [], deleted: [gone("a", "2026-03-08T10:00:00.000Z")] },
+    );
+
+    expect(result.applications).toHaveLength(1);
+    expect(result.removed).toBe(0);
+  });
+
+  it("treats an undated application as older than any deletion", () => {
+    const result = planMerge(
+      { applications: [app("a", "")], deleted: [] },
+      { applications: [], deleted: [gone("a", "2026-03-08T10:00:00.000Z")] },
+    );
+
+    expect(result.applications).toHaveLength(0);
   });
 });

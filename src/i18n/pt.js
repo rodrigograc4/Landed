@@ -147,6 +147,8 @@ export default {
     nothingToExport: "Não há candidaturas para exportar.",
     replaced: "{count} candidaturas importadas, substituindo as anteriores.",
     merged: "{added} candidaturas adicionadas · {updated} atualizadas.",
+    mergedWithRemoved:
+      "{added} candidaturas adicionadas · {updated} atualizadas · {removed} removidas.",
     storageFailed:
       "Não foi possível guardar no navegador. As alterações podem perder-se ao fechar a página.",
     readError: "Não foi possível ler o ficheiro.",

@@ -171,7 +171,8 @@ Export writes a file named `landed-YYYY-MM-DD.json`:
   "exportedAt": "2026-08-26T23:12:13.000Z",
   "applications": [
     { "id": "app_...", "company": "...", "role": "...", "updatedAt": "..." }
-  ]
+  ],
+  "deleted": [{ "id": "app_...", "deletedAt": "..." }]
 }
 ```
 
@@ -189,7 +190,9 @@ in it before entering your own.
 Merging compares `updatedAt` and keeps whichever copy of an application was
 edited last, so importing an older file never overwrites a newer edit. Entries
 without a timestamp, such as those from a backup taken before this existed,
-count as the older side.
+count as the older side. `deleted` records what was removed and when, so a
+merge also drops any application deleted after its last edit instead of
+bringing it back.
 
 ## Contributing
 

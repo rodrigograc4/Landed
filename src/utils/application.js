@@ -154,6 +154,72 @@ export function mergeApplications(current, incoming) {
   return sortApplications([...byId.values()]);
 }
 
+/**
+ * A deletion record: which application was deleted and when. Returns null for
+ * anything without a usable id and timestamp.
+ */
+export function normalizeDeletion(input) {
+  if (!input || typeof input !== "object") return null;
+
+  const id = typeof input.id === "string" ? input.id.trim() : "";
+  const deletedAt = parseTimestamp(input.deletedAt);
+  return id && deletedAt ? { id, deletedAt } : null;
+}
+
+/** Combines two deletion logs, keeping the latest deletion of each id. */
+export function mergeDeletions(current, incoming) {
+  const byId = new Map();
+
+  [...current, ...incoming].forEach((entry) => {
+    const existing = byId.get(entry.id);
+    if (!existing || entry.deletedAt > existing.deletedAt) {
+      byId.set(entry.id, entry);
+    }
+  });
+
+  return [...byId.values()];
+}
+
+/**
+ * An application stays only if it was edited after its latest deletion, so a
+ * deletion on one device wins over an older copy still sitting in a file.
+ */
+export function dropDeleted(applications, deletions) {
+  const deletedAt = new Map(
+    deletions.map((entry) => [entry.id, entry.deletedAt]),
+  );
+
+  return applications.filter(
+    (item) =>
+      !deletedAt.has(item.id) || item.updatedAt > deletedAt.get(item.id),
+  );
+}
+
+/**
+ * Everything a merge import does, in one pure step: the merged applications
+ * and deletion log, plus what changed for the confirmation message.
+ */
+export function planMerge(current, incoming) {
+  const deleted = mergeDeletions(current.deleted, incoming.deleted);
+  const applications = dropDeleted(
+    mergeApplications(current.applications, incoming.applications),
+    deleted,
+  );
+
+  const before = new Set(current.applications.map((item) => item.id));
+  const after = new Set(applications.map((item) => item.id));
+
+  return {
+    applications,
+    deleted,
+    added: [...after].filter((id) => !before.has(id)).length,
+    updated: incoming.applications.filter(
+      (item) => after.has(item.id) && willReplace(current.applications, item),
+    ).length,
+    removed: [...before].filter((id) => !after.has(id)).length,
+  };
+}
+
 /** True when the incoming copy would replace an application already stored. */
 export function willReplace(current, item) {
   const existing = current.find((entry) => entry.id === item.id);

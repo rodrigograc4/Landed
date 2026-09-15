@@ -1,21 +1,30 @@
 import { useCallback, useEffect, useState } from "react";
-import { loadApplications, saveApplications } from "../utils/storage";
+import {
+  loadApplications,
+  loadDeletions,
+  saveApplications,
+  saveDeletions,
+} from "../utils/storage";
 import {
   createId,
-  mergeApplications,
   normalizeApplication,
   sortApplications,
 } from "../utils/application";
 
-/** Single source of truth for the applications, mirrored to localStorage. */
+/**
+ * Single source of truth for the applications, mirrored to localStorage, along
+ * with the log of deletions that lets a merge tell "deleted" from "never seen".
+ */
 export default function useApplications() {
   const [applications, setApplications] = useState(loadApplications);
+  const [deleted, setDeleted] = useState(loadDeletions);
 
   const [storageFailed, setStorageFailed] = useState(false);
 
   useEffect(() => {
-    setStorageFailed(!saveApplications(applications));
-  }, [applications]);
+    const saved = saveApplications(applications);
+    setStorageFailed(!(saveDeletions(deleted) && saved));
+  }, [applications, deleted]);
 
   const upsert = useCallback((draft) => {
     const application = normalizeApplication({
@@ -38,15 +47,31 @@ export default function useApplications() {
 
   const remove = useCallback((id) => {
     setApplications((current) => current.filter((item) => item.id !== id));
+    setDeleted((current) => [
+      ...current.filter((entry) => entry.id !== id),
+      { id, deletedAt: new Date().toISOString() },
+    ]);
   }, []);
 
-  const replaceAll = useCallback((list) => {
-    setApplications(sortApplications(list));
+  /** Takes a backup as the whole truth, its deletion log included. */
+  const replaceAll = useCallback((backup) => {
+    setApplications(sortApplications(backup.applications));
+    setDeleted(backup.deleted);
   }, []);
 
-  const mergeAll = useCallback((list) => {
-    setApplications((current) => mergeApplications(current, list));
+  /** Stores the result of planMerge. */
+  const applyMerge = useCallback((merged) => {
+    setApplications(merged.applications);
+    setDeleted(merged.deleted);
   }, []);
 
-  return { applications, storageFailed, upsert, remove, replaceAll, mergeAll };
+  return {
+    applications,
+    deleted,
+    storageFailed,
+    upsert,
+    remove,
+    replaceAll,
+    applyMerge,
+  };
 }
