@@ -1,9 +1,17 @@
-import { DELETED_KEY, STORAGE_KEY, VIEW_KEY, VIEW_VALUES } from "./constants";
+import {
+  ARCHIVES_KEY,
+  DELETED_KEY,
+  STORAGE_KEY,
+  VIEW_KEY,
+  VIEW_VALUES,
+} from "./constants";
 import {
   normalizeApplication,
   normalizeDeletion,
+  settleArchives,
   sortApplications,
 } from "./application";
+import { normalizeArchive } from "./archive";
 
 /** Reads localStorage, ignoring anything invalid (broken JSON, an older shape). */
 export function loadApplications() {
@@ -43,6 +51,29 @@ export function loadDeletions() {
 export function saveDeletions(deletions) {
   try {
     window.localStorage.setItem(DELETED_KEY, JSON.stringify(deletions));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function loadArchives() {
+  try {
+    const parsed = JSON.parse(
+      window.localStorage.getItem(ARCHIVES_KEY) ?? "[]",
+    );
+    return Array.isArray(parsed)
+      ? settleArchives([], parsed.map(normalizeArchive).filter(Boolean))
+          .archives
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveArchives(archives) {
+  try {
+    window.localStorage.setItem(ARCHIVES_KEY, JSON.stringify(archives));
     return true;
   } catch {
     return false;

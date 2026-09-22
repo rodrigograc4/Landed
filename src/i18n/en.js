@@ -7,6 +7,7 @@ export default {
     import: "Import JSON",
     export: "Export JSON",
     exportCsv: "Export CSV",
+    archives: "Archives",
     github: "Open source repository on GitHub",
   },
 
@@ -131,11 +132,45 @@ export default {
     timelineSubtitle: "Last {weeks} weeks",
   },
 
+  archives: {
+    title: "Archives",
+    subtitle:
+      "Past applications, kept out of the main page until you need them again.",
+    archiveTitle: "Archive the current applications",
+    archiveHint:
+      "The {count} applications on the main page move into an archive. You can unarchive them at any time.",
+    nothingToArchive: "There are no applications on the main page to archive.",
+    name: "Archive name",
+    archive: "Archive",
+    listTitle: "Archived searches",
+    empty: "You haven't archived any search yet.",
+    archivedOn: "Archived on {date}",
+    saved: "Saved",
+    applications: "Applications",
+    interviews: "Interviews",
+    offers: "Offers",
+    exportCsv: "Export CSV",
+    unarchive: "Unarchive",
+    unarchiveTitle: "Unarchive?",
+    unarchiveMessage:
+      'The {count} applications in the "{name}" archive go back to the main page and the archive is removed.',
+    delete: "Delete archive",
+    confirmTitle: "Delete archive?",
+    confirmMessage:
+      'The "{name}" archive and its {count} applications will be permanently removed.',
+    archived: "{count} applications archived.",
+    unarchived: "{count} applications back on the main page.",
+    deleted: "Archive deleted.",
+  },
+
   import: {
     title: "Import {count} applications",
     message:
       "You have {count} applications stored. You can merge the file into them or replace everything.",
     skipped: "{count} invalid entries were skipped.",
+    archived: "{count} of them are in archives.",
+    existingArchives:
+      "You also have {count} archives with {archived} applications. Replacing everything deletes them too.",
     merge: "Merge with current",
     replace: "Replace everything",
     cancel: "Cancel",
@@ -146,6 +181,7 @@ export default {
     nothingToExport: "There are no applications to export.",
     replaced: "{count} applications imported, replacing the previous ones.",
     merged: "{added} applications added · {updated} updated.",
+    mergedArchives: "{count} archives added.",
     mergedWithRemoved:
       "{added} applications added · {updated} updated · {removed} removed.",
     storageFailed:

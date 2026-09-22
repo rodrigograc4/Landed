@@ -7,6 +7,7 @@ export default {
     import: "Importar JSON",
     export: "Exportar JSON",
     exportCsv: "Exportar CSV",
+    archives: "Arquivos",
     github: "Repositório open source no GitHub",
   },
 
@@ -132,11 +133,45 @@ export default {
     timelineSubtitle: "Últimas {weeks} semanas",
   },
 
+  archives: {
+    title: "Arquivos",
+    subtitle:
+      "Candidaturas anteriores, guardadas fora da página principal até voltares a precisar delas.",
+    archiveTitle: "Arquivar as candidaturas atuais",
+    archiveHint:
+      "As {count} candidaturas da página principal passam para um arquivo. Podes desarquivá-las quando quiseres.",
+    nothingToArchive: "Não há candidaturas na página principal para arquivar.",
+    name: "Nome do arquivo",
+    archive: "Arquivar",
+    listTitle: "Procuras arquivadas",
+    empty: "Ainda não arquivaste nenhuma procura.",
+    archivedOn: "Arquivado a {date}",
+    saved: "Guardadas",
+    applications: "Candidaturas",
+    interviews: "Entrevistas",
+    offers: "Propostas",
+    exportCsv: "Exportar CSV",
+    unarchive: "Desarquivar",
+    unarchiveTitle: "Desarquivar?",
+    unarchiveMessage:
+      'As {count} candidaturas do arquivo "{name}" voltam para a página principal e o arquivo deixa de existir.',
+    delete: "Eliminar arquivo",
+    confirmTitle: "Eliminar arquivo?",
+    confirmMessage:
+      'O arquivo "{name}" e as suas {count} candidaturas serão removidos definitivamente.',
+    archived: "{count} candidaturas arquivadas.",
+    unarchived: "{count} candidaturas de volta à página principal.",
+    deleted: "Arquivo eliminado.",
+  },
+
   import: {
     title: "Importar {count} candidaturas",
     message:
       "Tens {count} candidaturas guardadas. Podes juntar as do ficheiro às atuais ou substituir tudo.",
     skipped: "{count} entradas inválidas foram ignoradas.",
+    archived: "{count} delas estão em arquivos.",
+    existingArchives:
+      "Tens também {count} arquivos com {archived} candidaturas. Substituir tudo apaga-os também.",
     merge: "Juntar às atuais",
     replace: "Substituir tudo",
     cancel: "Cancelar",
@@ -147,6 +182,7 @@ export default {
     nothingToExport: "Não há candidaturas para exportar.",
     replaced: "{count} candidaturas importadas, substituindo as anteriores.",
     merged: "{added} candidaturas adicionadas · {updated} atualizadas.",
+    mergedArchives: "{count} arquivos adicionados.",
     mergedWithRemoved:
       "{added} candidaturas adicionadas · {updated} atualizadas · {removed} removidas.",
     storageFailed:

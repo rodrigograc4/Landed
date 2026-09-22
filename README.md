@@ -35,6 +35,11 @@ live in your own `localStorage` and never leave the device.
 - **Statistics**: response and interview rates, what stage everything is at,
   where you applied, how you found each opening, and volume per week over the
   last 8 weeks.
+- **Archives**: once a search is over, archive it under a name. Its
+  applications leave the main page and the statistics, and wait on the
+  Archives page, one line each with how many postings you saved and how many
+  applications, interviews and offers it produced. Export an archive to CSV, unarchive it to
+  bring everything back, or delete it for good.
 - **Backup you control**: export everything to a JSON file, import it back,
   merging with what is there or replacing it. Invalid entries are skipped, never
   imported half-broken. A CSV export is there too, for spreadsheets.
@@ -84,6 +89,19 @@ your volume per week over the last 8 weeks, which stage everything is currently
 at, where you have been applying, and which sources are actually producing
 results. Saved postings are excluded from every metric, since you have not
 applied to them yet and counting them would only drag the rates down.
+
+### Archives
+
+<img src="public/screenshot-archives.png" alt="The archives page" width="100%" />
+
+Once a search is over, say because you landed the job, the Archives page moves
+every application on the main page into an archive, under a name you choose or
+the months it covered. The main page and the statistics start from zero for the
+next search, and nothing is lost. Each archive is a single line: how many
+postings you saved, and how many applications, interviews and offers the search
+produced. The buttons on the right export it to CSV, bring it back to the main
+page, or delete it for good, and the last two ask first. Archives travel with
+the JSON backup, so restoring on another device brings them along.
 
 ## Privacy
 
@@ -150,8 +168,8 @@ src/
 ├── components/   Presentational components, one concern each
 ├── hooks/        useApplications (the store), useDismiss, useModalLayer
 ├── i18n/         Provider, context and the en/pt dictionaries
-├── pages/        Applications and Stats
-└── utils/        Normalisation, storage, backup, statistics, constants
+├── pages/        Applications, Stats and Archives
+└── utils/        Normalisation, storage, backup, archives, statistics, constants
 tests/            Unit tests for the utils and the dictionaries
 examples/         A sample backup file to import and try the app with
 ```
@@ -172,6 +190,14 @@ Export writes a file named `landed-YYYY-MM-DD.json`:
   "applications": [
     { "id": "app_...", "company": "...", "role": "...", "updatedAt": "..." }
   ],
+  "archives": [
+    {
+      "id": "arc_...",
+      "name": "Mar - Sep 2026",
+      "archivedAt": "...",
+      "applications": [{ "id": "app_...", "company": "...", "role": "..." }]
+    }
+  ],
   "deleted": [{ "id": "app_...", "deletedAt": "..." }]
 }
 ```
@@ -184,8 +210,9 @@ Import also accepts a bare array of applications, so a hand-written or
 hand-edited file still works.
 
 [examples/landed-sample.json](examples/landed-sample.json) holds 35 invented
-applications in exactly this format, if you want to see the app with something
-in it before entering your own.
+applications in exactly this format, plus two archived searches of 17 and 33,
+from 2025 and 2021, if you want to see the app with something in it before
+entering your own.
 
 Merging compares `updatedAt` and keeps whichever copy of an application was
 edited last, so importing an older file never overwrites a newer edit. Entries
@@ -193,6 +220,14 @@ without a timestamp, such as those from a backup taken before this existed,
 count as the older side. `deleted` records what was removed and when, so a
 merge also drops any application deleted after its last edit instead of
 bringing it back.
+
+Archives merge by id. Each application lives in one place only: an archive
+keeps its copy unless the one in the main list was edited after the archive
+was made, so importing a backup taken before you archived does not put those
+applications back on the main page. Unarchiving or deleting an archive is
+recorded in `deleted` under the archive's id, so an older file cannot restore
+it either. Files without `archives`, from versions before 1.3.0, import as
+before.
 
 ## Contributing
 

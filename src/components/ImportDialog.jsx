@@ -11,7 +11,10 @@ const buttonClass =
 export default function ImportDialog({
   open,
   incoming,
+  archived,
   existing,
+  existingArchives,
+  existingArchived,
   skipped,
   onCancel,
   onMerge,
@@ -26,6 +29,19 @@ export default function ImportDialog({
       <p className="text-muted mt-2 text-sm">
         {t("import.message", { count: existing })}
       </p>
+      {existingArchives > 0 && (
+        <p className="mt-1 text-sm text-rose-700">
+          {t("import.existingArchives", {
+            count: existingArchives,
+            archived: existingArchived,
+          })}
+        </p>
+      )}
+      {archived > 0 && (
+        <p className="text-muted mt-1 text-sm">
+          {t("import.archived", { count: archived })}
+        </p>
+      )}
       {skipped > 0 && (
         <p className="text-light-gray mt-1 text-xs">
           {t("import.skipped", { count: skipped })}

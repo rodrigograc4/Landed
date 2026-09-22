@@ -51,7 +51,7 @@ function parseDate(value) {
 }
 
 /** Accepts an ISO timestamp and returns it, or "" when there is none to trust. */
-function parseTimestamp(value) {
+export function parseTimestamp(value) {
   const raw = String(value ?? "").trim();
   if (!raw) return "";
 
@@ -196,14 +196,72 @@ export function dropDeleted(applications, deletions) {
 }
 
 /**
- * Everything a merge import does, in one pure step: the merged applications
- * and deletion log, plus what changed for the confirmation message.
+ * Combines two lists of archives by id. Archives are never edited, so either
+ * copy will do; one unarchived or deleted after it was made stays gone, and so
+ * does any application deleted from the log.
+ */
+export function mergeArchives(current, incoming, deletions) {
+  const deletedAt = new Map(
+    deletions.map((entry) => [entry.id, entry.deletedAt]),
+  );
+  const byId = new Map();
+
+  [...current, ...incoming].forEach((archive) => {
+    if (!byId.has(archive.id)) byId.set(archive.id, archive);
+  });
+
+  return [...byId.values()]
+    .filter(
+      (archive) =>
+        !deletedAt.has(archive.id) ||
+        archive.archivedAt > deletedAt.get(archive.id),
+    )
+    .map((archive) => ({
+      ...archive,
+      applications: dropDeleted(archive.applications, deletions),
+    }));
+}
+
+/**
+ * Makes every application live in one place: an archive keeps its copy unless
+ * the main one was edited after archiving, and the newer of two archives wins.
+ * Empty archives are dropped, newest archive first.
+ */
+export function settleArchives(applications, archives) {
+  const live = new Map(applications.map((item) => [item.id, item]));
+  const claimed = new Set();
+
+  const settled = [...archives]
+    .sort((a, b) => b.archivedAt.localeCompare(a.archivedAt))
+    .map((archive) => ({
+      ...archive,
+      applications: archive.applications.filter((item) => {
+        if (claimed.has(item.id)) return false;
+        if (live.get(item.id)?.updatedAt > archive.archivedAt) return false;
+        claimed.add(item.id);
+        return true;
+      }),
+    }))
+    .filter((archive) => archive.applications.length > 0);
+
+  return {
+    applications: applications.filter((item) => !claimed.has(item.id)),
+    archives: settled,
+  };
+}
+
+/**
+ * Everything a merge import does, in one pure step: the merged applications,
+ * archives and deletion log, plus what changed for the confirmation message.
  */
 export function planMerge(current, incoming) {
   const deleted = mergeDeletions(current.deleted, incoming.deleted);
-  const applications = dropDeleted(
-    mergeApplications(current.applications, incoming.applications),
-    deleted,
+  const { applications, archives } = settleArchives(
+    dropDeleted(
+      mergeApplications(current.applications, incoming.applications),
+      deleted,
+    ),
+    mergeArchives(current.archives ?? [], incoming.archives ?? [], deleted),
   );
 
   const before = new Set(current.applications.map((item) => item.id));
@@ -211,12 +269,17 @@ export function planMerge(current, incoming) {
 
   return {
     applications,
+    archives,
     deleted,
     added: [...after].filter((id) => !before.has(id)).length,
     updated: incoming.applications.filter(
       (item) => after.has(item.id) && willReplace(current.applications, item),
     ).length,
     removed: [...before].filter((id) => !after.has(id)).length,
+    archivesAdded: archives.filter(
+      (archive) =>
+        !(current.archives ?? []).some((item) => item.id === archive.id),
+    ).length,
   };
 }
 

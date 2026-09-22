@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBoxArchive,
   faChartPie,
   faCheck,
   faDatabase,
@@ -82,6 +83,11 @@ export default function Navbar({ onImport, onExport, onExportCsv }) {
             {t("nav.exportCsv")}
           </DropdownItem>
         </Dropdown>
+
+        <NavLink to="/archives" className={linkClass} title={t("nav.archives")}>
+          <FontAwesomeIcon icon={faBoxArchive} className="text-xs" />
+          <Label>{t("nav.archives")}</Label>
+        </NavLink>
 
         <Dropdown
           icon={faGlobe}

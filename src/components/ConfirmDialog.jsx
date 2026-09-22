@@ -5,6 +5,8 @@ export default function ConfirmDialog({
   open,
   title,
   message,
+  confirmLabel,
+  tone = "danger",
   onCancel,
   onConfirm,
 }) {
@@ -25,9 +27,11 @@ export default function ConfirmDialog({
         <button
           type="button"
           onClick={onConfirm}
-          className="flex-1 rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-90"
+          className={`flex-1 rounded-full px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-90 ${
+            tone === "danger" ? "bg-red-600" : "bg-accent"
+          }`}
         >
-          {t("confirm.delete")}
+          {confirmLabel ?? t("confirm.delete")}
         </button>
       </div>
     </Modal>

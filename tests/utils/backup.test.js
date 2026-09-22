@@ -77,6 +77,49 @@ describe("readBackup deletions", () => {
   });
 });
 
+describe("readBackup archives", () => {
+  const archived = {
+    id: "arc_1",
+    name: "Spring",
+    archivedAt: "2026-09-20T10:00:00Z",
+    applications: [{ ...entry, id: "a" }],
+  };
+
+  it("reads a backup whose only content is archives", () => {
+    const result = readBackup(
+      JSON.stringify({ applications: [], archives: [archived, { id: "x" }] }),
+    );
+    expect(result.errorKey).toBeNull();
+    expect(result.imported).toBe(0);
+    expect(result.archived).toBe(1);
+    expect(result.archives.map((item) => item.id)).toEqual(["arc_1"]);
+  });
+
+  it("keeps an archived application out of the main list", () => {
+    const result = readBackup(
+      JSON.stringify({
+        applications: [
+          { ...entry, id: "a" },
+          { ...entry, id: "b" },
+        ],
+        archives: [archived],
+      }),
+    );
+    expect(result.applications.map((item) => item.id)).toEqual(["b"]);
+    expect(result.archived).toBe(1);
+  });
+
+  it("has no archives for files without them", () => {
+    expect(readBackup(JSON.stringify([entry])).archives).toEqual([]);
+  });
+
+  it("still fails when neither list has anything valid", () => {
+    expect(
+      readBackup(JSON.stringify({ applications: [], archives: [{}] })).errorKey,
+    ).toBe("file.noValidEntries");
+  });
+});
+
 describe("buildCsv", () => {
   const t = (key) => key;
 

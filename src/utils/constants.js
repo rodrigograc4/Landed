@@ -100,6 +100,7 @@ export const UNSUCCESSFUL = "unsuccessful";
 
 export const STORAGE_KEY = "landed:applications";
 export const DELETED_KEY = "landed:deleted";
+export const ARCHIVES_KEY = "landed:archives";
 export const VIEW_KEY = "landed:view";
 export const LANGUAGE_KEY = "landed:language";
 

@@ -11,6 +11,7 @@ import Toast from "./components/Toast";
 import ImportDialog from "./components/ImportDialog";
 import Applications from "./pages/Applications";
 import Stats from "./pages/Stats";
+import Archives from "./pages/Archives";
 import useApplications from "./hooks/useApplications";
 import {
   exportApplications,
@@ -18,16 +19,21 @@ import {
   importApplications,
 } from "./utils/backup";
 import { planMerge } from "./utils/application";
+import { countArchived } from "./utils/archive";
 import { useI18n } from "./i18n";
 
 export default function App() {
   const { t } = useI18n();
   const {
     applications,
+    archives,
     deleted,
     storageFailed,
     upsert,
     remove,
+    archive,
+    unarchive,
+    removeArchive,
     replaceAll,
     applyMerge,
   } = useApplications();
@@ -52,21 +58,26 @@ export default function App() {
   }, [notify, storageFailed, t]);
 
   const exportWith = useCallback(
-    (write) => {
-      if (applications.length === 0) {
+    (count, write) => {
+      if (count === 0) {
         notify(t("file.nothingToExport"), "error");
         return;
       }
 
-      write(applications, t);
-      notify(t("file.exported", { count: applications.length }));
+      write();
+      notify(t("file.exported", { count }));
     },
-    [applications, notify, t],
+    [notify, t],
   );
 
   const handleExport = () =>
-    exportWith((list) => exportApplications(list, deleted));
-  const handleExportCsv = () => exportWith(exportApplicationsCsv);
+    exportWith(applications.length + countArchived(archives), () =>
+      exportApplications(applications, deleted, archives),
+    );
+  const handleExportCsv = () =>
+    exportWith(applications.length, () =>
+      exportApplicationsCsv(applications, t),
+    );
 
   const handleImport = useCallback(
     async (file) => {
@@ -93,16 +104,28 @@ export default function App() {
         return;
       }
 
-      const merged = planMerge({ applications, deleted }, incoming);
+      const merged = planMerge({ applications, archives, deleted }, incoming);
       applyMerge(merged);
+      const summary = t(
+        merged.removed > 0 ? "file.mergedWithRemoved" : "file.merged",
+        merged,
+      );
       notify(
-        t(
-          merged.removed > 0 ? "file.mergedWithRemoved" : "file.merged",
-          merged,
-        ),
+        merged.archivesAdded > 0
+          ? `${summary.replace(/\.$/, "")} · ${t("file.mergedArchives", { count: merged.archivesAdded })}`
+          : summary,
       );
     },
-    [applications, applyMerge, deleted, notify, pendingImport, replaceAll, t],
+    [
+      applications,
+      applyMerge,
+      archives,
+      deleted,
+      notify,
+      pendingImport,
+      replaceAll,
+      t,
+    ],
   );
 
   return (
@@ -130,14 +153,32 @@ export default function App() {
               path="/stats"
               element={<Stats applications={applications} />}
             />
+            <Route
+              path="/archives"
+              element={
+                <Archives
+                  applications={applications}
+                  archives={archives}
+                  onArchive={archive}
+                  onUnarchive={unarchive}
+                  onDelete={removeArchive}
+                  notify={notify}
+                />
+              }
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
 
         <ImportDialog
           open={Boolean(pendingImport)}
-          incoming={pendingImport?.imported ?? 0}
+          incoming={
+            (pendingImport?.imported ?? 0) + (pendingImport?.archived ?? 0)
+          }
+          archived={pendingImport?.archived ?? 0}
           existing={applications.length}
+          existingArchives={archives.length}
+          existingArchived={countArchived(archives)}
           skipped={pendingImport?.skipped ?? 0}
           onCancel={() => setPendingImport(null)}
           onMerge={() => applyImport("merge")}
